@@ -68,9 +68,15 @@
     </div>
     <div class="member_page">
         {% for i in range(1, page) %} 
+        {% if search_word != "" %}
+        <a href="/member/list/{{i}}/{{search_word}}">
+            {{i}}
+        </a>
+        {% else %}
         <a href="/member/list/{{i}}">
             {{i}}
         </a>
+        {% endif %}
         {% endfor %}
     </div>
     

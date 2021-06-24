@@ -490,6 +490,7 @@ exports.get_membersearch = (req, res) => {
     }
 
     var is_grade = 0;
+    var search_grade = '';
 
     if(req.params.search_word == '프리미엄' || req.params.search_word == '북클럽' || req.params.search_word == '세미나' || req.params.search_word == '종료')
     {
@@ -498,32 +499,34 @@ exports.get_membersearch = (req, res) => {
 
     page_number = ((page_number - 1) * 30);
 
-    const count_books = models.books_apply.count({}).then(pa => {
-        if(is_grade == 1)
-        {
-            const books_all = models.books_member.findAll({ where: {number: {[Op.gte]: page_number}, grade : search_word},limit: 30,order:[
-                ['end_date', 'ASC']
-            ]}).then(member => {
-                page = (pa / 30) + 1;
-                res.render('member_list', {
-                    page: page,
-                    Member: member,
+    if(is_grade == 1)
+    {
+        const count_books = models.books_member.count({where: {grade: search_word}}).then(pa => {
+                const books_all = models.books_member.findAll({ where: {grade : search_word},offset: page_number,limit: 30,order:[
+                    ['end_date', 'ASC']
+                ]}).then(member => {
+                    page = (pa / 30) + 1;
+                    res.render('member_list', {
+                        page: page,
+                        Member: member,
+                        search_word,
+                    });
                 });
+        });
+    }
+    else
+    {
+        const count_books = models.books_member.count({where: {[Op.or]:[{name: {[Op.like]: '%'+search_word+'%'}},{phone: {[Op.like]: '%'+search_word+'%'}}]}}).then(pa => { 
+        const books_all = models.books_member.findAll({ where: {[Op.or]:[{name : {[Op.like]: '%'+search_word+'%'}},{phone: {[Op.like]: '%'+search_word+'%'}}]},offset:page_number,limit: 30, order:[
+            ['end_date', 'ASC']
+        ]}).then(Member => {
+            page = (pa / 30) + 1;
+            res.render('member_list', {
+                page: page,
+                Member: Member,
+                search_word,
             });
-        }
-        else
-        {
-            const books_all = models.books_member.findAll({ where: {number: {[Op.gte]: page_number}, [Op.or]:[{name : {[Op.like]: '%'+search_word+'%'}},{phone: {[Op.like]: '%'+search_word+'%'}}]},limit: 30, order:[
-                ['end_date', 'ASC']
-            ]}).then(Member => {
-                page = (pa / 30) + 1;
-                res.render('member_list', {
-                    page: page,
-                    Member: Member,
-                });
-            });
-        }
-        
-    });
-
+        });
+        });
+    }
 }

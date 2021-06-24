@@ -1,0 +1,101 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="pay_title">
+    <h2 class="pay_title_h2">지출결의서 작성</h2>
+    <input type="button" value="지출결의 목록" onClick="window.location.href='/pay/list'" class="pay_button"/>
+</div>
+<div class="pay_detail">
+    <form method="post" name="pay_submit" id="pay_submit" class="pay_submit">
+    <table border="0" cellpadding="0" cellspacing="0" class="pay_detail_table">
+        <tr>
+            <th>이름</th>
+            <td><input type="text" class="pay_textbox" name="name"></td>
+        </tr>
+        <tr>
+            <th>분류</th>
+            <td>
+                <select name="pay_option" class="pay_option">
+                    <option value>분류</option>
+                    <option value="법인카드">법인카드</option>
+                    <option value="도서비용">도서비용</option>
+                    <option value>분류</option>
+            </td>
+        </tr>
+        <tr>
+            <th>신청일</th>
+            <td><input type="text" class="pay_textbox" name="reg_date"></td>
+        </tr>
+        <tr>
+            <th>스크럼명</th>
+            <td><input type="text" class="pay_textbox" name="scrum"></td>
+        </tr>
+        <tr>
+            <th>매니저</th>
+            <td><input type="text" class="pay_textbox" name="manager"></td>
+        </tr>
+        <tr>
+            <th>슈퍼바이저</th>
+            <td><input type="text" class="pay_textbox" name="supervisor"></td>
+        </tr>
+        <tr>
+            <th>상품명</th>
+            <td><input type="text" class="pay_textbox" name="product_name"></td>
+        </tr>
+        <tr>
+            <th>단가</th>
+            <td><input type="text" class="pay_textbox" name="per_price"></td>
+        </tr>
+        <tr>
+            <th>수량</th>
+            <td><input type="text" class="pay_textbox" name="quantity"></td>
+        </tr>
+        <tr>
+            <th>부가세</th>
+            <td>
+                <input type="radio" name="tax" value="1" checked>포함</input>
+                <input type="radio" name="tax" value="0">미포함</input>
+            </td>
+        </tr>
+        <tr>
+            <th>합계</th>
+            <td><input type="text" class="pay_textbox" name="sum_price"></td>
+        </tr>
+        <tr>
+            <th>구매 목적</th>
+            <td><input type="text" class="pay_textbox" name="object"></td>
+        </tr>
+        <tr>
+            <th>거래처</th>
+            <td><input type="text" class="pay_textbox" name="pay_place"></td>
+        </tr>
+        <tr>
+            <th>결제일</th>
+            <td><input type="text" class="pay_textbox" name="pay_date" placeholder="ex) 2021-01-01"></td>
+        </tr>
+        <tr>
+            <th>결제방법</th>
+            <td>
+                <input type="radio" name="pay_method" value="card" checked>카드</input>
+                <input type="radio" name="pay_method" value="money">현금</input>
+            </td>
+        </tr>
+         <tr>
+            <th>영수증</th>
+            <td><input type="file" name="receipt"></td>
+        </tr>
+        <tr>
+            <input type="button" id="pay_submit" value="제출">
+            <input type="button" id="pay_list" onClick="window.location.href='/pay/list'" value="목록">
+        </tr>
+    </table>
+    </form>
+</div>
+        
+{% endblock %}
+
+{% block script %}
+<script>
+    var 
+</script>
+{% endblock %}

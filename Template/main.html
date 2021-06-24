@@ -1,0 +1,36 @@
+{% extends 'header.html' %}
+
+{% block content %}
+    <table colspacing="1" border="1" width="20%" class="total_table" style="float:left">
+        <tr align="center">
+            <td colspan="3">갱신</td>
+        </tr>
+        <tr align="center">
+            <td>{{today_month}}월</td>
+            <td>{{next_month}}월</td>
+            <td>{{two_month}}월</td>
+        </tr>
+        <tr align="center">
+            <td>{{renew_one_count}}/{{all_one_count}}</td>
+            <td>{{renew_two_count}}/{{all_two_count}}</td>
+            <td>{{renew_three_count}}/{{all_three_count}}</td>
+        </tr>
+    </table>
+    <table colspacing="1" border="1" width="20%" class="total_table" style="float:right;margin-right:3rem;">
+        <tr align="center">
+            <td colspan="4">북클럽 계기판</td>
+        </tr>
+        <tr align="center">
+            <td>프리미엄</td>
+            <td>북클럽</td>
+            <td>세미나</td>
+            <td>종료</td>
+        </tr>
+        <tr align="center">
+            <td>{{premium_count}}</td>
+            <td>{{club_count}}</td>
+            <td>{{seminar_count}}</td>
+            <td>{{gaingeclub_count}}</td>
+        </tr>
+    </table>
+{% endblock %}

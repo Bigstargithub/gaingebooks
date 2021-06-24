@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>가인지컨설팅그룹</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <link rel="stylesheet" href="/main.css" media="screen and (min-width:300px) and (max-width:1440px)">
+</head>
+<body>
+    <div class="main_login">
+        <img src="logo.png" style="width:17rem;">
+        <form action="/login" method="post" id="form_login">
+            <div class="login_user">
+                <p>
+                    <span class="id_info">아이디</span><span><input type="text" id="login_id" name="id">
+                </p>
+                <p>
+                    <span class="id_info" style="margin-right:12px;">비밀번호</span><span><input type="password" id="login_pw" name="pw">
+                </p>
+            </div>
+            <button id="login_submit" type="button">로그인</button>
+        </form>
+        <span class="login_error">{{error_message}}</span>
+    </div>
+</html>
+
+<script>
+    var login_button = document.querySelector('#login_submit');
+    var login_id = document.querySelector('#login_id');
+    var login_pw = document.querySelector('#login_pw');
+    login_button.addEventListener('click', function() {
+        if(login_id.value == '')
+        {
+            return alert('아이디를 입력하시기 바랍니다.');
+        }
+        else if(login_pw.value == '')
+        {
+            return alert('비밀번호를 입력하시기 바랍니다.');
+        }
+        else
+        {
+            document.getElementById('form_login').submit();
+        }
+    });
+
+    window.addEventListener('keydown', function(key) {
+        if(key.keyCode == 13)
+        {
+            login_button.click();
+        }
+    })
+</script>

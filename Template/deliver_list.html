@@ -1,0 +1,66 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="member_title">
+    <h2>발송현황</h2>
+</div>
+<div class="booklist_table">
+    <table colspacing="0" border="0" align="center">
+        <tr background-color="#00658c" align="center">
+            <td width="5%">이름</td>
+            <td width="5%">일자</td>
+            <td width="5%">책이름</td>
+            <td width="5%">발송현황</td>
+            <td width="5%">수량</td>
+            <td width="3%">수정</td>
+        </tr>
+        {% for booklist in book_list %}
+        <tr style="background-color:#fff;color:#000;">
+            <td width="5%">{{booklist.name}}</td>
+            <td width="5%">{{booklist.date}}</td>
+            <td width="5%">{{booklist.book_name}}</td>
+            <td width="5%">
+            {% if booklist.is_send == 0 %}
+            미발송
+            {% else %}
+            발송
+            {% endif %}
+            </td>
+            <td width="5%">{{booklist.quantity}}</td>
+            <td width="3%">
+                <button type="button" onClick="location.href='/deliver/modify/{{booklist.number}}'">수정</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="member_title">
+        <span>
+            <span class="search_class">이름검색</span>
+            <input type="text" name="search_name" id="search_name" placeholder="이름을 입력하세요." onKeyDown="pressEnter()"/>
+            <button type="button" id="search_button" value="검색">검색</button>
+        </span>
+    </div>
+    <div class="member_page">
+        {% for i in range(1, page) %} 
+        <a href="/deliver/list/{{i}}">
+            {{i}}
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    function pressEnter() {
+        if(window.event.keyCode == 13)
+        {
+            document.getElementById('search_button').click();
+        }
+    }
+
+    document.getElementById('search_button').addEventListener('click', function(e){
+        window.location.href="/deliver/list/1/"+ document.getElementById('search_name').value;
+    })
+</script>
+{% endblock %}

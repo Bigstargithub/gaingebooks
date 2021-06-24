@@ -1,0 +1,71 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="member_title">
+    <h2>도서목록 추가</h2>
+</div>
+<div class="member_detail">
+<form method="post" action="/books/regist" name="books_form" id="member_form">
+    <table border="0" cellpadding="0" class="member_form_table">
+        <tr>
+            <th>등록일자</th>
+            <td><input type="date" name="regist_date" id="regist_date" required pattern="\d{4}-\d{2}" class="member_textbox"></td>
+        </tr>
+        <tr>
+            <th>책이름1</th>
+            <td><input type="text" name="name1" id="name1" class="member_textbox"></td>
+        </tr>
+        <tr>
+            <th>책이름2</th>
+            <td><input type="text" name="name2" id="name2" class="member_textbox"></td>
+        </tr>
+        <tr>
+            <th>책이름3</th>
+            <td><input type="text" name="name3" id="name3" class="member_textbox"></td>
+        </tr>
+    </table>
+    <div style="text-align: center;margin-top:2rem;">
+        <button type="button" id="books_form_submit" value="저장">저장</button>
+        <button type="button" id="books_list" value="목록">목록</button>
+    </div>
+</form>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    var year = new Date().getFullYear();
+    var month = new Date().getMonth()+1;
+    var date = new Date(year, month, 2);
+    document.getElementById("regist_date").value = date.toISOString().substring(0,10);
+    const start_date = document.getElementById("regist_date").valueAsDate;
+
+    document.getElementById("regist_date").addEventListener('change',function(){
+        const start_date = document.getElementById("regist_date").valueAsDate;
+        document.getElementById("regist_date").valueAsDate.getFullYear();
+    });
+
+
+    document.getElementById("books_list").addEventListener('click', function(){
+        window.location.href="/books/list/1";
+    });
+
+    
+    document.getElementById("books_form_submit").addEventListener('click', function(){
+        
+        if(document.getElementById("regist_date").value == '')
+        {
+            alert("기업명을 입력하시기 바랍니다.");return false;
+        }
+        else if(document.getElementById("name1").value == '')
+        {
+            alert("이름을 입력하시기 바랍니다.");return false;
+        }
+        else
+        {
+            document.books_form.submit();
+        }
+        console.log("we did it!");
+    })
+</script>
+{% endblock%}

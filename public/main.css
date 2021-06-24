@@ -1,0 +1,304 @@
+body{
+    font-family: "Nanum-Gothic", sans-serif;
+    line-height: 1.5em;
+    margin:0;
+    padding:0;
+}
+li{
+    list-style:none;
+}
+ul{
+    margin:0;   
+}
+dd,div,h1,h2,h3{
+    margin:0;
+    padding:0;
+}
+td
+{
+    margin:0;
+    padding:0;
+    display:contents;
+}
+
+a, a:link, a:visited{
+    color: #000;
+    text-decoration: none;
+}
+th
+{
+    text-align:-internal-center;
+}
+input{vertical-align: middle;}
+.main_login{
+    width:100%;
+    margin: 0 auto;
+    text-align: center;
+    padding-top:20px;
+}
+
+.id_info{
+    margin-right:25px;
+}
+.regist{
+    margin-top:20px;
+    position:relative;
+    right:1em;
+}
+.regist_title
+{
+    width:100px;
+    display:inline-block;
+    color: #00658c;
+    font-weight:500;
+}
+.regist_text
+{
+    width:200px;
+    height:25px;
+    border-radius:1px;
+    border: 1px solid #00658c;
+    font-weight:500;
+    padding:5px;
+}
+.logo
+{
+    width:10rem;
+    padding:1em;
+}
+.header
+{
+    width:100%;
+    height:7rem;
+}
+.nav
+{
+    float:right;
+    margin-top:1em;
+    margin-right:1em;
+}
+.nav a{
+    font-weight:600;
+    font-size:1.3rem;
+}
+.member_logout{
+    font-size:1.3rem;
+}
+
+.content
+{
+    width:100%;
+    margin: 0 auto;
+    align-items: center;
+}
+.member_table
+{
+    margin:0 auto;
+    width:90%;
+    margin-top:1rem;
+}
+.member_table tr
+{
+    background-color: #00658c;
+    color:#fff;
+    text-align:center;
+    line-height:2rem;
+    width:80rem;
+    display:block;
+    font-size:0.7em;
+}
+.member_table tr td
+{
+    border-right:1px solid #fff;
+    border-bottom:1px solid #fff;
+    font-size:1em;
+    display:table-cell;
+}
+.member_detail td
+{
+    background-color: #fff;
+    color:#000;
+    border-bottom:1px solid #00658c;
+}
+.nav_link
+{
+    margin:0 1em;
+}
+.pay_table
+{
+    margin: 0 auto;
+    width:70%;
+}
+.pay_table tr
+{
+    background-color: #00658c;
+    color:#fff;
+    text-align:center;
+}
+.pay_title
+{
+    width:20%;
+    margin:0 auto;
+    text-align: center;
+}
+.pay_button
+{
+    position:relative;
+    left:51%;
+    bottom:2em;
+}
+.pay_title_h2
+{
+    text-align:center; 
+    font-size:1.2em;
+}
+.pay_detail
+{
+    width:52%;
+    margin:0 auto;
+    margin-top:1em;
+    position: relative;
+    left:14%;
+    margin-bottom:3em;
+}
+.pay_detail_table th
+{
+    width:4%;
+    padding:1em;
+    font-size:0.8em;
+    margin-bottom:2em;
+}
+.pay_detail_table td
+{
+    align-items: center;
+    width:30%
+}
+.pay_textbox
+{
+    padding:0.5em;
+    width:24%;
+}
+.pay_option
+{
+    width:15%;
+    padding:0.5em;
+}
+.pay_submit
+{
+    position:relative;
+    left:3em;
+}
+.total_table
+{
+    margin-left:3rem;
+}
+.total_table tr td
+{
+    display:table-cell;
+}
+.member_title
+{
+    text-align: center;
+    margin: 1rem 0;
+}
+.member_page
+{
+    text-align: center;
+    margin-top:1rem;
+    font-size:0.9em;
+}
+.member_form_table
+{
+    margin:0 auto;
+}
+.member_form_table tr
+{
+    line-height: 2.7em;
+}
+.member_form_table tr th
+{
+    padding:0 1rem;
+}
+.member_textbox
+{
+    padding:0.5em;
+}
+.member_selectbox
+{
+    padding:0.3em;
+}
+.member_radio
+{
+    vertical-align: baseline;
+}
+.member_detail
+{
+    margin-bottom:2em;
+}
+.member_list
+{
+    background-color: #fff;
+}
+.excel_button
+{
+    text-align:center;
+}
+.booklist_table
+{
+    margin:0 auto;
+    margin-top:1rem;
+}
+.booklist_table tr
+{
+    background-color: #00658c;
+    color:#fff;
+    text-align:center;
+    line-height:2rem;
+    width:43rem;
+    display:block;
+    font-size:0.7em;
+}
+.booklist_table tr td
+{
+    border-right:1px solid #fff;
+    border-bottom:1px solid #fff;
+    font-size:1em;
+    display:table-cell;
+}
+.search_class
+{
+    margin:0 0.5em;
+}
+.grade_button
+{
+    position:relative;
+    left:32rem;
+    margin-top:1rem;
+    margin-right:1em;
+}
+@media (max-width: 600px){
+    body
+    {
+        font-size:0.7rem;
+    }
+    .nav a{
+        font-weight:600;
+        font-size:0.7rem;
+    }
+    .member_logout{
+        font-size:0.7rem;
+    }
+    .total_table
+    {
+        font-size:0.7rem;
+    }
+    .logo
+    {
+        width:6rem;
+        padding:1em;
+    }
+    .header
+    {
+        height:5rem;
+    }
+}

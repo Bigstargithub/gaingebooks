@@ -1,0 +1,34 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="member_title">
+    <h2>도서목록</h2>
+</div>
+<div class="booklist_table">
+    <table colspacing="0" border="0" align="center">
+        <tr background-color="#00658c" align="center">
+            <td width="3%">번호</td>
+            <td width="5%">일자</td>
+            <td width="5%">책이름1</td>
+            <td width="5%">책이름2</td>
+            <td width="5%">책이름2</td>
+        </tr>
+        {% for booklist in books_list %}
+        <tr style="background-color:#fff;color:#000;">
+            <td width="3%">{{booklist.number}}</td>
+            <td width="5%">{{booklist.date}}</td>
+            <td width="5%">{{booklist.books_name1}}</td>
+            <td width="5%">{{booklist.books_name2}}</td>
+            <td width="5%">{{booklist.books_name3}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="member_page">
+        {% for i in range(1, page) %} 
+        <a href="/books/list/{{i}}">
+            {{i}}
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock%}

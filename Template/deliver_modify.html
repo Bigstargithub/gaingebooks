@@ -1,0 +1,75 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="member_title">
+    <h2>발송현황 수정</h2>
+</div>
+<div class="member_detail">
+<form method="post" action="/deliver/regist" name="books_form" id="member_form">
+    <table border="0" cellpadding="0" class="member_form_table">
+        <tr>
+            <th>이름</th>
+            <td><input type="text" name="name" id="name" class="member_textbox" value="{{deliver_member.name}}"></td>
+        </tr>
+        <tr>
+            <th>등록일자</th>
+            <td><input type="date" name="regist_date" id="regist_date" required pattern="\d{4}-\d{2}-\d{2}" class="member_textbox" value="{{deliver_member.date}}"></td>
+        </tr>
+        <tr>
+            <th>책이름</th>
+            <td>
+                <select name="books_name" id="books_name" class="member_selectbox">
+                    <option value="">책 선택</option>
+                    {% for Bookslist in bookslist %}
+                    {% if Bookslist.books_name1 == deliver_member.book_name %}
+                        <option value="{{Bookslist.books_name1}}" selected>{{Bookslist.books_name1}}</option>
+                        <option value="{{Bookslist.books_name2}}">{{Bookslist.books_name2}}</option>
+                        <option value="{{Bookslist.books_name3}}">{{Bookslist.books_name3}}</option>
+                    {% elif Bookslist.books_name2 == deliver_member.book_name %}
+                        <option value="{{Bookslist.books_name1}}">{{Bookslist.books_name1}}</option>
+                        <option value="{{Bookslist.books_name2}}" selected>{{Bookslist.books_name2}}</option>
+                        <option value="{{Bookslist.books_name3}}">{{Bookslist.books_name3}}</option>
+                    {% elif Bookslist.books_name3 == deliver_member.book_name %}
+                        <option value="{{Bookslist.books_name1}}">{{Bookslist.books_name1}}</option>
+                        <option value="{{Bookslist.books_name2}}">{{Bookslist.books_name2}}</option>
+                        <option value="{{Bookslist.books_name3}}" selected >{{Bookslist.books_name3}}</option>
+                    {% else %}
+                        <option value="{{Bookslist.books_name1}}">{{Bookslist.books_name1}}</option>
+                        <option value="{{Bookslist.books_name2}}">{{Bookslist.books_name2}}</option>
+                        <option value="{{Bookslist.books_name3}}">{{Bookslist.books_name3}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>발송여부</th>
+            <td>
+                {% if deliver_member.is_send == 0%}
+                <input type="radio" name="is_send" id="is_send" value="0" checked>미발송</input>
+                <input type="radio" name="is_send" id="is_send" value="1">발송</input>
+                {% else %}
+                <input type="radio" name="is_send" id="is_send" value="0">미발송</input>
+                <input type="radio" name="is_send" id="is_send" value="1" checked>발송</input>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>수량</th>
+            <td>
+                <input type="text" name="quantity" id="quantity" class="member_textbox" value="{{deliver_member.quantity}}">
+            </td>
+        </tr>
+    </table>
+    <div style="text-align: center;margin-top:2rem;">
+        <button type="button" id="books_form_submit" value="저장">저장</button>
+        <button type="button" id="books_list" value="목록">목록</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block script %}
+<script>
+    console.log('{{deliver_member.book_name}}');
+</script>
+{% endblock %}

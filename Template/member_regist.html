@@ -1,0 +1,205 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="member_title">
+    <h2>회원추가</h2>
+</div>
+<div class="member_detail">
+<form method="post" action="/member/regist" name="member_form" id="member_form">
+    <table border="0" cellpadding="0" class="member_form_table">
+        <tr>
+            <th>이름</th>
+            <td><input type="text" name="name" id="name" class="member_textbox"></td>
+        </tr>
+        <tr>
+            <th>기업명</th>
+            <td><input type="text" name="company" id="company" class="member_textbox"></td>
+        </tr>
+        <tr>
+            <th>등급</th>
+            <td>
+                <select name="grade" id="tax_option" class="member_selectbox">
+                    <option value="">등급</option>
+                    <option value="프리미엄">프리미엄</option>
+                    <option value="북클럽">북클럽</option>
+                    <option value="세미나">세미나</option>
+                    <option value="종료">종료</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>시작일자</th>
+            <td><input type="date" name="start_date" id="start_date" required pattern="\d{4}-\d{2}-\d{2}" class="member_textbox"></td>
+        </tr>
+        <tr>
+            <th>종료일자</th>
+            <td><input type="date" name="end_date" id="end_date" required pattern="\d{4}-\d{2}-\d{2}" class="member_textbox"></td>
+        </tr>
+        <tr>
+            <th>연락처</th>
+            <td><input type="text" name="phone" id="phone" class="member_textbox" placeholder="ex) 010-1234-5678"></td>
+        </tr>
+        <tr>
+            <th>지역</th>
+            <td><input type="text" name="city" id="city" class="member_textbox"></td>
+        </tr>
+        <tr>
+            <th>주소</th>
+            <td>
+                <p style="margin:0; margin-top:1em; line-height:1em;"><input type="text" name="addr_num" id="addr_num" class="member_textbox" style="width:4em;" placeholder="우편번호"></p>
+            </td>
+            <td>
+                <input type="text" name="address" id="address" class="member_textbox" style="width:30em;" placeholder="주소를 입력하시기 바랍니다.">    
+            </td>
+        </tr>
+        <tr>
+            <th>세금계산서</th>
+            <td>
+                <select name="tax_option" id="tax_option" class="member_selectbox">
+                    <option value="미발행">미발행</option>
+                    <option value="발행완료">발행완료</option>
+                    <option value="현금영수증">현금영수증</option>
+                    <option value="신용카드">신용카드</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>결제여부</th>
+            <td>
+                <input type="radio" name="is_pay" id="is_pay" value="0" checked class="member_radio">미결제</input>
+                <input type="radio" name="is_pay" id="is_pay" value="1" class="member_radio">결제</input>
+            </td>
+        </tr>
+        <tr style="display:none" id="pay_cost_tr">
+            <th>결제금액</th>
+            <td>
+                <input type="text" name="pay_cost" id="pay_cost" class="member_textbox">
+            </td>
+        </tr>
+        <tr style="display:none" id="pay_date_tr">
+            <th>결제일자</th>
+            <td>
+                <input type="date" name="pay_date" id="pay_date" required pattern="\d{4}-\d{2}-\d{2}" class="member_textbox">
+            </td>
+        </tr>
+        <tr style="display:none" id="pay_method_tr">
+            <th>결제방법</th>
+            <td>
+                <select name="pay_method" id="pay_method" class="member_selectbox">
+                    <option value="">결제방법</option>
+                    <option value="신용카드">신용카드</option>
+                    <option value="현금영수증">현금영수증</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>영상관 아이디</th>
+            <td><input type="text" name="online_id" id="online_id" class="member_textbox"></td>
+        </tr>
+        <tr>
+            <th>웰컴키트 발송여부</th>
+            <td>
+                <input type="radio" name="is_wellcome" id="is_wellcome" value="0" checked class="member_radio">미발송</input>
+                <input type="radio" name="is_wellcome" id="is_wellcome" value="1" class="member_radio">발송</input>
+            </td>
+        </tr>
+        <tr>
+            <th>회원메모</th>
+            <td>
+                <textarea name="memo" id="memo" placeholder="메모를 입력하세요." style="width:26rem;height:10rem;"></textarea>
+            </td>
+        </tr>
+    </table>
+    <div style="text-align: center; margin-top:2rem;">
+        <button type="button" id="member_form_submit" value="저장">저장</button>
+        <button type="button" id="member_list" value="목록">목록</button>
+    </div>
+</form>
+<div style="text-align:center; margin-top:2em;">
+    <form method="post" action="/member/excel" name="member_excel" id="member_excel" enctype="multipart/form-data">
+        <input type="file" id="excel_file" class="excel_button" name="excel_file" value="파일 추가">
+        <button type="button" id="excel_button" class="excel_button" value="엑셀로 추가">엑셀로 추가</button>
+    </form>
+</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    document.getElementById("start_date").value = new Date().toISOString().substring(0, 10);
+    document.getElementById("pay_date").value = new Date().toISOString().substring(0, 10);
+    const start_date = document.getElementById("start_date").valueAsDate;
+    document.getElementById("end_date").value = new Date(start_date.getFullYear()+1, start_date.getMonth(), start_date.getDate()).toISOString().substring(0,10);
+    var is_payed = document.getElementsByName("is_pay");
+
+    document.getElementById("start_date").addEventListener('change',function(){
+        const start_date = document.getElementById("start_date").valueAsDate;
+        document.getElementById("end_date").value = new Date(start_date.getFullYear()+1, start_date.getMonth(), start_date.getDate()).toISOString().substring(0,10);
+        document.getElementById("start_date").valueAsDate.getFullYear();
+    })
+
+    is_payed.forEach(function(input){
+        input.addEventListener('change',function(){
+            if(input.value == 1)
+            {
+                document.getElementById("pay_cost_tr").style="";
+                document.getElementById("pay_method_tr").style="";
+                document.getElementById("pay_date_tr").style="";
+            }
+            else
+            {
+                document.getElementById("pay_cost").value='';
+                document.getElementById("pay_method").value='';
+                document.getElementById("pay_date").value='';
+                document.getElementById("pay_cost_tr").style="display:none";
+                document.getElementById("pay_method_tr").style="display:none";
+                document.getElementById("pay_date_tr").style="display:none";
+            }
+        })
+    });
+
+    document.getElementById("member_list").addEventListener('click', function(){
+        window.location.href="/member/list/1";
+    });
+    
+    document.getElementById("member_form_submit").addEventListener('click', function(){
+        if(document.getElementById("name").value == '')
+        {
+            alert("이름을 입력하시기 바랍니다.");return false;
+        }
+        else if(document.getElementById("company").value == '')
+        {
+            alert("기업명을 입력하시기 바랍니다.");return false;
+        }
+        else if(document.getElementById("tax_option").options[document.getElementById("tax_option").selectedIndex].value == '')
+        {
+            alert("등급을 선택하시기 바랍니다.");return false;
+        }
+        else if(document.getElementById("phone").value == '')
+        {
+            alert("연락처를 입력하시기 바랍니다.");return false;
+        }
+        else if(document.getElementById("city").value == '')
+        {
+            alert("지역을 입력하시기 바랍니다.");return false;
+        }
+        else if(document.getElementById("addr_num").value == '')
+        {
+            alert("우편번호를 입력하시기 바랍니다.");return false;
+        }
+        else if(document.getElementById("address").value == '')
+        {
+            alert("주소를 입력하시기 바랍니다.");return false;
+        }
+        else
+        {
+            document.member_form.submit();
+        }
+        console.log("we did it!");
+    })
+
+document.getElementById("excel_button").addEventListener('click', function() {
+    document.getElementById("member_excel").submit();
+})
+</script>
+{% endblock%}

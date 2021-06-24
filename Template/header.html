@@ -1,0 +1,31 @@
+{% extends 'default.html' %}
+
+{% block header %}
+<div class="header">
+   <a href="/"><img src="/logo.png" class="logo"></a>
+    <div class="nav">
+        <a href="/member/list/1" class="nav_link">회원관리</a>
+        <a href="/member/regist" class="nav_link">회원추가</a>
+        <a href="/deliver/list/1" class="nav_link">발송현황</a>
+        <a href="/deliver/regist" class="nav_link">발송추가</a>
+        <a href="/books/list/1" class="nav_link">도서관리</a>
+        <a href="/books/regist" class="nav_link">도서추가</a>
+        <button type="button" action="/logout" method="post" id="member_logout" class="member_logout">로그아웃</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    var logout = document.getElementById('member_logout');
+    logout.addEventListener('click', function() {
+        var logout_form = document.createElement('form');
+        logout_form.setAttribute('method', 'POST');
+        logout_form.setAttribute('action','/logout');
+        
+        document.body.appendChild(logout_form);
+
+        logout_form.submit();
+    })
+</script>
+{% endblock %}

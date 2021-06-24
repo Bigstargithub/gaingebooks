@@ -1,0 +1,22 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="content">
+    <div class="pay_title">
+        <h2 style="text-align:center; margin-bottom:1rem;font-size:1.2em;">지출결의서 내역</h2>
+        <input type="button" value="지출결의 작성" onClick="window.location.href='/pay/regist'" class="pay_button"/>
+    </div>
+    <table cellspacing="0" cellpadding="0" border="0" class="pay_table">
+        <tr>
+            <td width="5%">번호</td>
+            <td width="5%">이름</td>
+            <td width="5%">분류</td>
+            <td width="5%">금액</td>
+            <td width="5%">매니저</td>
+            <td width="5%">슈퍼바이저</td>
+            <td width="5%">영수증</td>
+            <td width="5%">비고</td>
+        </tr>
+    </table>
+</div>
+{% endblock%}

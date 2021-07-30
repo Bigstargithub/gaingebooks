@@ -85,6 +85,7 @@ input{vertical-align: middle;}
     font-size:1.3rem;
 }
 
+
 .content
 {
     width:100%;
@@ -191,6 +192,7 @@ input{vertical-align: middle;}
 .total_table
 {
     margin-left:3rem;
+    width:30%;
 }
 .total_table tr td
 {

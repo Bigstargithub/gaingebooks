@@ -8,13 +8,14 @@
     "start": "nodemon server.js"
   },
   "keywords": [],
-  "author": "Hanbyeol Jang",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.5",
     "csv-parser": "^3.0.0",
     "dotenv": "^8.2.0",
+    "excel4node": "^1.7.2",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "fs": "*",

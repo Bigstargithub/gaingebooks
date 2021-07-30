@@ -37,7 +37,7 @@ router.post('/login', ctrl.post_login);
 
 router.post('/logout', ctrl.post_logout);
 
-router.get('/member/list/:id', is_login, ctrl.get_memberlist);
+router.get('/member/list/:id', ctrl.get_memberlist);
 
 router.get('/member/regist', is_login, ctrl.get_member_regist);
 
@@ -72,5 +72,7 @@ router.get('/deliver/modify/:id',is_login,ctrl.get_delivermodify);
 router.get('/deliver/list/:id/:search_word',is_login,ctrl.get_deliversearch);
 
 router.get('/member/list/:id/:search_word',is_login, ctrl.get_membersearch);
+
+router.get('/member/excel',is_login, ctrl.get_excel_list);
 
 module.exports = router;

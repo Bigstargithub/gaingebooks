@@ -41,6 +41,11 @@
                         <option value="북클럽">북클럽</option>
                         <option value="세미나">세미나</option>
                         <option value="종료" selected >종료</option>
+                    {% else %}
+                    <option value="프리미엄">프리미엄</option>
+                    <option value="북클럽">북클럽</option>
+                    <option value="세미나">세미나</option>
+                    <option value="종료" >종료</option>
                     {% endif %}
                 </select>
             </td>
@@ -129,13 +134,13 @@
                     <option value="">결제방법</option>
                     {% if member.pay_method == "신용카드" %}
                     <option value="신용카드" selected>신용카드</option>
-                    <option value="현금영수증">현금영수증</option>
-                    {% elif member.pay_method == "현금영수증" %}
+                    <option value="계좌이체">계좌이체</option>
+                    {% elif member.pay_method == "계좌이체" %}
                     <option value="신용카드">신용카드</option>
-                    <option value="현금영수증" selected >현금영수증</option>
+                    <option value="계좌이체" selected >계좌이체</option>
                     {% else %}
                     <option value="신용카드">신용카드</option>
-                    <option value="현금영수증">현금영수증</option>
+                    <option value="계좌이체">계좌이체</option>
                     {% endif %}
                 </select>
             </td>

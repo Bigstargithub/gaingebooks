@@ -5,7 +5,7 @@ module.exports = function(sequelize, DataTypes){
         number: {type: Sequelize.INTEGER(11), primaryKey: true, autoIncrement: true},
         name: {type: Sequelize.STRING(20)},
         date: {type: Sequelize.DATEONLY},
-        book_name: {type:Sequelize.STRING(30)},
+        book_name: {type:Sequelize.STRING(100)},
         is_send: {type: Sequelize.INTEGER(1)},
         quantity: {type: Sequelize.INTEGER(11)},
     });

@@ -3,6 +3,7 @@
 {% block content %}
 <div class="member_title">
     <h2>회원관리</h2>
+    <button type="button" id="excel_button" value="엑셀다운로드" class="grade_button">엑셀다운로드</button>
     <button type="button" id="premium_button" value="프리미엄" class="grade_button">프리미엄</button>
     <button type="button" id="club_button" value="북클럽" class="grade_button">북클럽</button>
     <button type="button" id="seminar_button" value="세미나" class="grade_button">세미나</button>
@@ -68,15 +69,9 @@
     </div>
     <div class="member_page">
         {% for i in range(1, page) %} 
-        {% if search_word != "" %}
         <a href="/member/list/{{i}}/{{search_word}}">
             {{i}}
         </a>
-        {% else %}
-        <a href="/member/list/{{i}}">
-            {{i}}
-        </a>
-        {% endif %}
         {% endfor %}
     </div>
     
@@ -100,6 +95,10 @@
     document.getElementById('end_button').addEventListener('click', function(){
         window.location.href="/member/list/1/종료";
     });
+
+    document.getElementById('excel_button').addEventListener('click',function(){
+        window.location.href="/member/excel";
+    })
 
     function pressEnter() {
         if(window.event.keyCode == 13)

@@ -5,6 +5,7 @@ const fs = require('fs');
 var path = require('path');
 const csv = require('csv-parser');
 const { resolve } = require('path');
+const xl = require('excel4node');
 
 exports.get_index = (req,res) => {
     if(req.session.admin === undefined)
@@ -13,6 +14,7 @@ exports.get_index = (req,res) => {
     }
     if(req.session.admin == false)
     {
+        console.log('hihi');
         res.render('index');
     }
     else
@@ -21,6 +23,7 @@ exports.get_index = (req,res) => {
         const today_month = new Date().getMonth() + 1;
         const next_month = new Date().getMonth() + 2;
         const two_month = new Date().getMonth() + 3;
+        const premium = '프리미엄';
         
         let year_next = new Date().getFullYear();
 
@@ -50,7 +53,6 @@ exports.get_index = (req,res) => {
         models.books_member.count({ where: {end_date: {[Op.gte]: two_date, [Op.lte]: two_date_last}}}).then(e => {
                 models.member_statistic.findOrCreate({where: {date: two_date},defaults: {total_user: e}});
                 models.member_statistic.update({total_user: e},{where:{date: two_date}});
-                console.log(e);
         });
 
         models.books_member.count({ where: {end_date: {[Op.gte]: three_date, [Op.lte]: three_date_last}}}).then(f => {
@@ -121,9 +123,10 @@ exports.get_memberlist = (req, res) => {
     }
 
     page_number = ((page_number - 1) * 30);
+    console.log(page_number);
     
     const count_member = models.books_member.count({}).then(pa => {
-        const member_all = models.books_member.findAll({ where: {number: {[Op.gte]: page_number}},limit: 30,order: [
+        const member_all = models.books_member.findAll({offset:page_number,limit: 30,order: [
             ['end_date','ASC']
         ]}).then(member => {
             page = (pa / 30) + 1;
@@ -191,6 +194,7 @@ exports.post_excel = (req,res) => {
            {
                is_pay = 1;
            }
+           console.log(result);
            models.books_member.create({
                name: result[results].name,
                company: result[results].company,
@@ -490,7 +494,6 @@ exports.get_membersearch = (req, res) => {
     }
 
     var is_grade = 0;
-    var search_grade = '';
 
     if(req.params.search_word == '프리미엄' || req.params.search_word == '북클럽' || req.params.search_word == '세미나' || req.params.search_word == '종료')
     {
@@ -499,34 +502,110 @@ exports.get_membersearch = (req, res) => {
 
     page_number = ((page_number - 1) * 30);
 
-    if(is_grade == 1)
-    {
-        const count_books = models.books_member.count({where: {grade: search_word}}).then(pa => {
-                const books_all = models.books_member.findAll({ where: {grade : search_word},offset: page_number,limit: 30,order:[
-                    ['end_date', 'ASC']
-                ]}).then(member => {
-                    page = (pa / 30) + 1;
-                    res.render('member_list', {
-                        page: page,
-                        Member: member,
-                        search_word,
-                    });
+    models.books_member.count({where:{grade: search_word}}).then(pa => {
+        if(is_grade == 1)
+        {
+            models.books_member.findAll({ where: {grade : search_word},offset:page_number,limit: 30,order:[
+                ['end_date', 'ASC']
+            ]}).then(member => {
+                page = (pa / 30) + 1;
+                console.log(page);
+                res.render('member_list', {
+                    page: page,
+                    Member: member,
+                    search_word: search_word,
                 });
-        });
-    }
-    else
-    {
-        const count_books = models.books_member.count({where: {[Op.or]:[{name: {[Op.like]: '%'+search_word+'%'}},{phone: {[Op.like]: '%'+search_word+'%'}}]}}).then(pa => { 
-        const books_all = models.books_member.findAll({ where: {[Op.or]:[{name : {[Op.like]: '%'+search_word+'%'}},{phone: {[Op.like]: '%'+search_word+'%'}}]},offset:page_number,limit: 30, order:[
-            ['end_date', 'ASC']
-        ]}).then(Member => {
-            page = (pa / 30) + 1;
-            res.render('member_list', {
-                page: page,
-                Member: Member,
-                search_word,
             });
-        });
-        });
+        }
+        else
+        {
+            models.books_member.findAll({ where: {[Op.or]:[{name : {[Op.like]: '%'+search_word+'%'}},{phone: {[Op.like]: '%'+search_word+'%'}}]},offset:page_number,limit: 30, order:[
+                ['end_date', 'ASC']
+            ]}).then(Member => {
+                page = (pa / 30) + 1;
+                res.render('member_list', {
+                    page: page,
+                    Member: Member,
+                    search_word: search_word,
+                });
+            });
+        }
+        
+    });
+
+}
+
+exports.get_excel_list = async (req, res) => {
+    const member_list = await models.books_member.findAll({});
+    if(member_list)
+    {
+        var wb = new xl.Workbook();
+
+        var numbers = 2;
+        var ws = wb.addWorksheet('Sheet 1');
+        ws.cell(1,1)
+        .string('번호');
+        ws.cell(1,2)
+        .string('이름');
+        ws.cell(1,3)
+        .string('기업명');
+        ws.cell(1,4)
+        .string('등급');
+        ws.cell(1,5)
+        .string('시작일자');
+        ws.cell(1,6)
+        .string('종료일자');
+        ws.cell(1,7)
+        .string('연락처');
+        ws.cell(1,8)
+        .string('주소');
+        ws.cell(1,9)
+        .string('웰컴키트 발송여부');
+        ws.cell(1,10)
+        .string('영상관 아이디');
+
+        for(member_lists of member_list)
+        {
+            
+            var data = member_lists.dataValues;
+            var is_wellcome = '';
+            if(data.is_wellcome == 0)
+            {
+                is_wellcome = '미발송';
+            }
+            else if(data.is_wellcome == 1)
+            {
+                is_wellcome = '발송';
+            }
+            ws.cell(numbers,1)
+            .number(data.number);
+            ws.cell(numbers,2)
+            .string(data.name);
+            ws.cell(numbers,3)
+            .string(data.company);
+            ws.cell(numbers,4)
+            .string(data.grade);
+            ws.cell(numbers,5)
+            .date(data.start_date);
+            ws.cell(numbers,6)
+            .date(data.end_date);
+            ws.cell(numbers,7)
+            .string(data.phone);
+            ws.cell(numbers,8)
+            .string(data.address);
+            ws.cell(numbers,9)
+            .string(is_wellcome)
+            ws.cell(numbers, 10)
+            .string(data.online_id);
+
+            numbers++;
+        }
+
+        wb.write('upload/member_list.xlsx');
+
+        res.setHeader('Content-disposition', 'attachment; filename=member_list.xlsx'); // 다운받아질 파일명 설정
+      res.setHeader('Content-type', 'xlsx'); // 파일 형식 지정
+        res.download(`upload/member_list.xlsx`);
+        res.send("<script>location.reload();</script>");
     }
 }

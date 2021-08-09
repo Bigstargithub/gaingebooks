@@ -235,6 +235,7 @@ exports.get_deliverlist = (req,res) => {
         const books_all = models.books_apply.findAll({ where: {number: {[Op.gte]: page_number}},limit: 30}).then(books => {
             page = (pa / 30) + 1;
             res.render('deliver_list', {
+                id: req.params.id,
                 page: page,
                 book_list: books,
             });
@@ -450,6 +451,7 @@ exports.get_delivermodify = (req, res) => {
     }).then(deliver_member => {
         models.books_list.findAll({}).then(bookslist => {
             res.render('deliver_modify', {
+                id: req.params.id,
                 deliver_member: deliver_member,
                 bookslist: bookslist
             })
@@ -607,5 +609,26 @@ exports.get_excel_list = async (req, res) => {
       res.setHeader('Content-type', 'xlsx'); // 파일 형식 지정
         res.download(`upload/member_list.xlsx`);
         res.send("<script>location.reload();</script>");
+    }
+}
+
+exports.post_update_deliver = async (req, res) => {
+    const id = req.params.id;
+    const { name, regist_date, books_name, is_send, quantity} = req.body;
+    const applies = await models.books_apply.update({
+        name,
+        date: regist_date,
+        book_name: books_name,
+        is_send,
+        quantity
+    }, {
+        where: {
+            number: id,
+        }
+    });
+
+    if(applies)
+    {
+        res.send("<script>alert('수정되었습니다.');location.href='/deliver/list/1';</script>");
     }
 }

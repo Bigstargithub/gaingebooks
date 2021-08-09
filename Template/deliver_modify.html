@@ -5,7 +5,7 @@
     <h2>발송현황 수정</h2>
 </div>
 <div class="member_detail">
-<form method="post" action="/deliver/regist" name="books_form" id="member_form">
+<form method="post" action="/deliver/modify/{{id}}" name="books_form" id="member_form">
     <table border="0" cellpadding="0" class="member_form_table">
         <tr>
             <th>이름</th>
@@ -70,6 +70,12 @@
 
 {% block script %}
 <script>
-    console.log('{{deliver_member.book_name}}');
+    document.getElementById('books_form_submit').addEventListener('click', function() {
+        document.books_form.submit();
+    })
+
+    document.getElementById('books_list').addEventListener('click', function(){
+        window.history.back();
+    })
 </script>
 {% endblock %}

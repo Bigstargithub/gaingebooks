@@ -75,4 +75,6 @@ router.get('/member/list/:id/:search_word',is_login, ctrl.get_membersearch);
 
 router.get('/member/excel',is_login, ctrl.get_excel_list);
 
+router.post('/deliver/modify/:id', is_login, ctrl.post_update_deliver);
+
 module.exports = router;
